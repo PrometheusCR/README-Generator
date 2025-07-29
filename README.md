@@ -1,6 +1,3 @@
-<p align="center">
-  <img src="thumbnail.png" alt="README Generator Thumbnail" width="600"/>
-</p>
 
 # 🛠️ README Generator
 
