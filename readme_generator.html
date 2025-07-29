@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>STL Asset README Generator</title>
+  <style>
+    body {
+      background-color: #1b1b1b;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+    h2, h3 {
+      color: #ffd700;
+    }
+    input, textarea, select {
+      margin: 6px 0 12px;
+      width: 100%;
+      padding: 8px;
+      background-color: #2c2c2c;
+      color: #e0e0e0;
+      border: 1px solid #444;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #555;
+    }
+    label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>🧊 STL Asset README Generator</h2>
+  <form id="readmeForm">
+    <label>Asset Name: <input type="text" name="assetName" /></label>
+    <label>Date Created: <input type="date" name="date" /></label>
+
+    <label>Source Software:</label><br />
+    <input type="radio" name="software" value="Fusion 360" /> Fusion 360<br />
+    <input type="radio" name="software" value="Blender" /> Blender<br />
+    <input type="radio" name="software" value="Unreal Engine" /> Unreal Engine<br />
+
+    <label>Asset Type for UE (if applicable):</label>
+    <select name="assetType">
+      <option value="">—</option>
+      <option value="Static Mesh">Static Mesh</option>
+      <option value="Skeletal Mesh">Skeletal Mesh</option>
+      <option value="FX or Niagara">FX or Niagara</option>
+      <option value="Environment Element">Environment Element</option>
+    </select>
+
+    <label>Exported File Type:</label>
+    <select name="fileType">
+      <option value=".stl">.stl</option>
+      <option value=".fbx">.fbx</option>
+      <option value=".obj">.obj</option>
+      <option value=".glb">.glb</option>
+    </select>
+
+    <label>Concept Overview:</label>
+    <textarea name="concept" rows="3"></textarea>
+
+    <label>Design Notes:</label>
+    <textarea name="notes" rows="4"></textarea>
+
+    <button type="button" onclick="generateReadme()">Generate README</button>
+  </form>
+
+  <h3>README Output:</h3>
+  <pre id="output"></pre>
+
+  <script>
+    function generateReadme() {
+      const form = document.forms['readmeForm'];
+      const asset = form['assetName'].value;
+      const date = form['date'].value;
+      const concept = form['concept'].value;
+      const notes = form['notes'].value;
+      const assetType = form['assetType'].value;
+      const fileType = form['fileType'].value;
+
+      const softwareChoices = form['software'];
+      let softwareUsed = '';
+      for (let i = 0; i < softwareChoices.length; i++) {
+        if (softwareChoices[i].checked) {
+          softwareUsed = softwareChoices[i].value;
+        }
+      }
+
+      const content =
+`# STL Asset – ${asset}
+
+**Date Created:** ${date}  
+**Author:** Chris  
+**Source Software:** ${softwareUsed}  
+**Version:** v1.0  
+**File Type Exported:** ${fileType}  
+${assetType ? '**UE Asset Type:** ' + assetType : ''}
+
+---
+
+## 🧠 Concept Overview
+${concept}
+
+## 🖌️ Design Notes
+${notes}
+`;
+
+      document.getElementById('output').textContent = content;
+
+      const blob = new Blob([content], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${asset}_README.txt`;
+      link.textContent = '⬇️ Download README (.txt)';
+      document.getElementById('output').appendChild(document.createElement('br'));
+      document.getElementById('output').appendChild(link);
+    }
+  </script>
+</body>
+</html>
