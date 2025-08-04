@@ -20,6 +20,9 @@ Customize your presets and export your final doc.
 Created by [PrometheusCR](https://github.com/PrometheusCR)  
 SkillBridge Project // Forged with Fusion 360, Blender, DaVinci Resolve
 
+**Support the myth, shape the legend.**  
+[Drop a coin to your coder 🪙](https://ko-fi.com/prometheus_crr)
+
 ---
 
 © MIT License – Feel free to remix and mythify.
